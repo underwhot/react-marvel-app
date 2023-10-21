@@ -1,46 +1,33 @@
 import { useEffect, useState } from 'react';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
-// import thor from '../../resources/img/thor.jpeg';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
 const RandomChar = () => {
-  const [res, setRes] = useState({ char: {}, loading: true, error: false });
-  const marvelService = new MarvelService();
-
-  const onCharLoaded = (char) => {
-    setRes({ char, loading: false });
-  };
-
-  const onError = () => {
-    setRes({ loading: false, error: true });
-  };
-
-  const onCharLoading = () => {
-    setRes({ loading: true });
-  };
-
-  const updateChar = () => {
-    const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-    onCharLoading();
-    marvelService.getCharacter(id).then(onCharLoaded).catch(onError);
-  };
+  const [char, setChar] = useState(null);
+  const { loading, error, getCharacter, clearError } = useMarvelService();
 
   useEffect(() => {
     updateChar();
   }, []);
 
-  const randomCharHandler = (e) => {
-    e.preventDefault();
-    updateChar();
+  const onCharLoaded = (char) => {
+    setChar(char);
   };
 
-  const { char, loading, error } = res;
+  const updateChar = () => {
+    clearError();
+    const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+    getCharacter(id).then(onCharLoaded);
+  };
+
   const errorMessage = error ? <ErrorMessage></ErrorMessage> : null;
   const spinner = loading ? <Spinner></Spinner> : null;
-  const content = !(loading || error) ? <View char={char}></View> : null;
+  const content = !(loading || error || !char) ? (
+    <View char={char}></View>
+  ) : null;
 
   return (
     <div className="randomchar">
@@ -54,7 +41,7 @@ const RandomChar = () => {
           Do you want to get to know him better?
         </p>
         <p className="randomchar__title">Or choose another one</p>
-        <button onClick={randomCharHandler} className="button button__main">
+        <button onClick={updateChar} className="button button__main">
           <div className="inner">try it</div>
         </button>
         <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />

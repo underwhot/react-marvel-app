@@ -1,40 +1,29 @@
 import { useEffect, useState } from 'react';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton';
 import './charInfo.scss';
-// import thor from '../../resources/img/thor.jpeg';
 
 const CharInfo = ({ charId }) => {
-  const [res, setRes] = useState({ char: null, loading: false, error: false });
-  const marvelService = new MarvelService();
+  const [char, setChar] = useState(null);
+  const { loading, error, getCharacter, clearError } = useMarvelService();
+
+  useEffect(() => {
+    updateChar();
+  }, [charId]);
 
   const onCharLoaded = (char) => {
-    setRes({ char, loading: false });
-  };
-
-  const onError = () => {
-    setRes({ loading: false, error: true });
-  };
-
-  const onCharLoading = () => {
-    setRes({ loading: true });
+    setChar(char);
   };
 
   const updateChar = () => {
     if (!charId) {
       return;
     }
-    onCharLoading();
-    marvelService.getCharacter(charId).then(onCharLoaded).catch(onError);
+    clearError();
+    getCharacter(charId).then(onCharLoaded);
   };
-
-  useEffect(() => {
-    updateChar();
-  }, [charId]);
-
-  const { char, loading, error } = res;
 
   const sceleton = char || loading || error ? null : <Skeleton></Skeleton>;
   const errorMessage = error ? <ErrorMessage></ErrorMessage> : null;
