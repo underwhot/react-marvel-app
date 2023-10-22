@@ -5,7 +5,7 @@ import AppHeader from './components/appHeader/AppHeader';
 function App() {
   
   return (
-    <Router>
+    <Router basePath="https://underwhot.github.io/react-marvel-app/">
       <div className="app">
         <AppHeader></AppHeader>
         <main>
