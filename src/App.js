@@ -3,6 +3,8 @@ import { MainPage, ComicsPage, SingleComicPage, Page404 } from './components/pag
 import AppHeader from './components/appHeader/AppHeader';
 
 function App() {
+  
+  
   return (
     <Router>
       <div className="app">
