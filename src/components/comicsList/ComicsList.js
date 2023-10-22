@@ -38,7 +38,7 @@ const ComicsList = () => {
     const items = arr.map((item, i) => {
       return (
         <li key={item.id} className="comics__item">
-          <Link to={`/comics/${item.id}`}>
+          <Link to={`${item.id}`}>
             <img
               src={item.thumbnail}
               alt={item.title}

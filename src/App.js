@@ -5,14 +5,14 @@ import AppHeader from './components/appHeader/AppHeader';
 function App() {
   
   return (
-    <Router basePath="https://underwhot.github.io/react-marvel-app/">
+    <Router>
       <div className="app">
         <AppHeader></AppHeader>
         <main>
           <Routes>
-            <Route path="/" element={<MainPage></MainPage>}></Route>
-            <Route path="/comics" element={<ComicsPage></ComicsPage>}></Route>
-            <Route path="/comics/:comicId" element={<SingleComicPage></SingleComicPage>}></Route>
+            <Route index element={<MainPage></MainPage>}></Route>
+            <Route path="comics" element={<ComicsPage></ComicsPage>}></Route>
+            <Route path="comics/:comicId" element={<SingleComicPage></SingleComicPage>}></Route>
             <Route path="*" element={<Page404></Page404>}></Route>
           </Routes>
         </main>
