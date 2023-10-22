@@ -1,6 +1,6 @@
 {
   "homepage": "https://underwhot.github.io/react-marvel-app/",
-  "name": "react-template",
+  "name": "marvel-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

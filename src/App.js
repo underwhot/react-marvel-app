@@ -4,7 +4,6 @@ import AppHeader from './components/appHeader/AppHeader';
 
 function App() {
   
-  
   return (
     <Router>
       <div className="app">
